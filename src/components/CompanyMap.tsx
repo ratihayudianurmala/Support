@@ -91,7 +91,7 @@ export default function CompanyMap() {
           </div>
 
           {/* Kolom Frame / Iframe Peta */}
-          <div className="lg:col-span-7 aspect-video lg:aspect-auto rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg min-h-[350px]" id="iframe-map-container">
+          <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg w-full h-[280px] sm:h-[350px] lg:h-full min-h-[250px]" id="iframe-map-container">
             <iframe 
               src="https://maps.google.com/maps?q=Jl.%20Keramat%20I%2C%20Jajar%20Tunggal%2C%20Kecamatan%20Wiyung%2C%20Surabaya%2C%20Jawa%20Timur%2060229&t=&z=15&ie=UTF8&iwloc=&output=embed" 
               className="w-full h-full border-0" 

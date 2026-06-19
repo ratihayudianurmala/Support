@@ -54,7 +54,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col justify-between pt-18 transition-colors" id="app-root-container">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f7f9fb] text-[#191c1e] dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col justify-between pt-18 transition-colors" id="app-root-container">
       {/* Top Main Navigation Bar */}
       <Navbar
         currentView={view}

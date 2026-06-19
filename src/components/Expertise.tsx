@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Mail, Upload, RefreshCw } from "lucide-react";
+import React from "react";
+import { Mail } from "lucide-react";
 
 interface TeamMember {
   name: string;
@@ -7,7 +7,6 @@ interface TeamMember {
   email: string;
   imgUrl: string;
   actions: string[];
-  fileName?: string;
 }
 
 // Convert shareable Google Drive links to direct image source stream links
@@ -30,22 +29,22 @@ const DEFAULT_MEMBERS: TeamMember[] = [
     name: "Ratih Ayudia Nurmala",
     role: "Team Audit & Konsultasi",
     email: "dhearatih83@gmail.com",
-    imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuB8rb_oKOmaXBddZhDC8JXYDOXzuz6B3Z22b-EIP60GRxpWdyrBNPJb2qr-YhR-yTLtuz8eBfh_xYYmJgwzGTL5U1HKC82xGms-e1fEwToWq9JTM3DCqzLdNthgHQlT87DJyyDtezYyu8owPSIzqTmgiRwIs9bQxgv0Afgk9waiSpHH8wCdG9tJJd5X7ZJAdFyFpWwl7RAhu3aGg4JTcqlt8sLxj0nI5tX7ujlxttJ-IOC8uCpZV6RjNCuRCug8y6Vki2Rhd0hfMYA",
-    actions: ["share"]
+    imgUrl: "https://drive.google.com/file/d/1uWaYE2zs-GLDgvSJO5YwJkXSQIeIOwyE/view?usp=drive_link",
+    actions: []
   },
   {
     name: "Febri Sofi Suharjo",
     role: "Team Procurement",
     email: "febrisuharjo@gmail.com",
-    imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA60EuWZTQ2rh9xLmUpsi3JGXkpwiXJmRpp_GmK5OWVocCYzEgfHjCrTZoVSKPSVQ_1XxcX6HYMJELQ3MSd_ggD96d9Egv9ypmfkS8D8IgLndloA2WtKUPgQ8kO9bQ3eUwoNZ1n8etnfApQ9nUYagxg6nzF_xqVIbLQl4ekmJrlUxgGAdk7HZD-3EXz6Jw3R4RDa2yR-SlMiXghziMhS5_VWICd1f-LT2-noa1A2rdaq20FQlGgtvHJhbx_JJdthL0q06L9cq-RGa4",
+    imgUrl: "https://drive.google.com/file/d/1EGjKjB1S6CrpKJ4fQRfZZecpc9vgxeLI/view?usp=drive_link",
     actions: []
   },
   {
     name: "Naufal Anugrah Ramadani",
     role: "Team Technical Support",
     email: "naufalanugrahramadani@gmail.com",
-    imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCLXC2117sZfk32PStfnuATIwrTfctovA7M5kIHZpIFo5MzrdRvj2Vd3VluNf_24LGNALnM-YPCmngvx6WbNg_Qviplec0twmb8ek2jsmRZ5fTRI_NuX2oFYnGlugeDyQwwqZkeQrTkyxpU5l9L4tq2sr2wJzfC3FCTkHs98CG0s7QbSZRxCYAkM3eG4RfVYhEJDNxAvZ7ziosgRjpXHphepSjIJHi_ctZOlSt8w_xP65QXFpzCNUboGRE9cIXAVY8bOqMc6Pei7QM",
-    actions: ["camera"]
+    imgUrl: "https://drive.google.com/file/d/1jqZT59t2IeGcX8npu5dIy9RvQD2dQh7r/view?usp=drive_link",
+    actions: []
   },
   {
     name: "Achmad Amay addadhil",
@@ -57,54 +56,7 @@ const DEFAULT_MEMBERS: TeamMember[] = [
 ];
 
 export default function Expertise({ onOpenConsultation }: ExpertiseProps) {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(() => {
-    const saved = localStorage.getItem("sobat_support_team_v3");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error("Failed to parse saved team data", e);
-      }
-    }
-    return DEFAULT_MEMBERS;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("sobat_support_team_v3", JSON.stringify(teamMembers));
-  }, [teamMembers]);
-
-  const handleFileUpload = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setTeamMembers(prev => {
-          const updated = [...prev];
-          updated[index] = {
-            ...updated[index],
-            imgUrl: reader.result as string,
-            fileName: file.name
-          };
-          return updated;
-        });
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const resetPhoto = (index: number) => {
-    setTeamMembers(prev => {
-      const updated = [...prev];
-      updated[index] = {
-        ...updated[index],
-        imgUrl: DEFAULT_MEMBERS[index].imgUrl,
-        fileName: undefined
-      };
-      return updated;
-    });
-  };
+  const teamMembers = DEFAULT_MEMBERS;
 
   return (
     <section className="py-20 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors relative" id="tim">
@@ -145,28 +97,6 @@ export default function Expertise({ onOpenConsultation }: ExpertiseProps) {
                       (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400&auto=format&fit=crop";
                     }}
                   />
-                  {/* Absolute overlay for Upload/Reset Photo */}
-                  <div className="absolute inset-x-0 bottom-0 bg-slate-950/80 p-2 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-between gap-2">
-                    <label className="flex-1 flex items-center justify-center gap-1.5 px-2 py-1 text-[11px] font-bold text-white bg-blue-600 hover:bg-blue-700 rounded cursor-pointer transition">
-                      <Upload className="w-3.5 h-3.5" />
-                      Upload Foto
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => handleFileUpload(idx, e)}
-                      />
-                    </label>
-                    {member.fileName && (
-                      <button
-                        onClick={() => resetPhoto(idx)}
-                        className="p-1 text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded transition cursor-pointer"
-                        title="Reset Photo"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
                 </div>
 
                 {/* Name & Role Container */}
